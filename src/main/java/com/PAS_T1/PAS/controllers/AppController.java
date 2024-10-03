@@ -13,7 +13,7 @@ public class AppController {
     @GetMapping("")
     @CrossOrigin(origins = "*")
     public String welcomeMessage(){
-        return("Bem vindo as lojas ACME");
+        return("Bem vindo as SoftLucas");
     }
 
 
