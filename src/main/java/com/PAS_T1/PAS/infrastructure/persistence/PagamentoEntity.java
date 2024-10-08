@@ -4,24 +4,24 @@ package com.PAS_T1.PAS.infrastructure.persistence;
 import jakarta.persistence.*;
 
 @Entity
-public class Pagamento {
+public class PagamentoEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long codigo;
 
     @ManyToOne(cascade = CascadeType.REFRESH)
-    private Assinatura assinatura;
+    private AssinaturaEntity assinaturaEntity;
 
     private double valor_pago;
     private String promocao;
 
-    public Pagamento() {
+    public PagamentoEntity() {
     }
 
-    public Pagamento(long codigo, Assinatura assinatura, double valorPago, String promocao) {
+    public PagamentoEntity(long codigo, AssinaturaEntity assinaturaEntity, double valorPago, String promocao) {
         this.codigo = codigo;
-        this.assinatura = assinatura;
+        this.assinaturaEntity = assinaturaEntity;
         this.valor_pago = valorPago;
         this.promocao = promocao;
     }
@@ -30,12 +30,12 @@ public class Pagamento {
         return codigo;
     }
 
-    public Assinatura getAssinatura() {
-        return assinatura;
+    public AssinaturaEntity getAssinatura() {
+        return assinaturaEntity;
     }
 
-    public void setAssinatura(Assinatura assinatura) {
-        this.assinatura = assinatura;
+    public void setAssinatura(AssinaturaEntity assinaturaEntity) {
+        this.assinaturaEntity = assinaturaEntity;
     }
 
     public double getValor_pago() {
@@ -58,7 +58,7 @@ public class Pagamento {
     public String toString() {
         return "Pagamento{" +
                 "codigo=" + codigo +
-                ", assinatura=" + assinatura +
+                ", assinatura=" + assinaturaEntity +
                 ", valorPago=" + valor_pago +
                 ", promocao='" + promocao + '\'' +
                 '}';

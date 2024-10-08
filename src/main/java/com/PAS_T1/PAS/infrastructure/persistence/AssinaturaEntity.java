@@ -1,43 +1,44 @@
 package com.PAS_T1.PAS.infrastructure.persistence;
 
 
-import com.bcopstein.sistvendas.dominio.modelos.StatusATIVO;
 import jakarta.persistence.*;
 
 import java.util.Date;
 
 @Entity
-public class Assinatura {
+public class AssinaturaEntity {
 
     @Id
     @GeneratedValue
+
+
     private long codigo;
     @Column(name = "Inicio_Vigencia", nullable = false)
     private Date inicio_vigencia;
     @Column(name = "Fim_Vigencia", nullable = false)
     private Date fim_vigencia;
     @ManyToOne
-    private Aplicativo aplicativo;
+    private AplicativoEntity aplicativoEntity;
 
     @ManyToOne
-    private Cliente cliente;
+    private ClienteEntity clienteEntity;
 
 
 
 
 
-    public Assinatura() {
+    public AssinaturaEntity() {
 
     }
 
 
 
-    public Assinatura(long codigo, Aplicativo aplicativo, Cliente cliente, Date inicioVigencia, Date fim_vigencia) {
+    public AssinaturaEntity(long codigo, AplicativoEntity aplicativoEntity, ClienteEntity clienteEntity, Date inicioVigencia, Date fim_vigencia) {
         this.codigo = codigo;
         this.inicio_vigencia = inicioVigencia;
         this.fim_vigencia = fim_vigencia;
-        this.aplicativo = aplicativo;
-        this.cliente = cliente;
+        this.aplicativoEntity = aplicativoEntity;
+        this.clienteEntity = clienteEntity;
 
     }
 
@@ -50,20 +51,20 @@ public class Assinatura {
         this.codigo = codigo;
     }
 
-    public Aplicativo getAplicativo() {
-        return aplicativo;
+    public AplicativoEntity getAplicativo() {
+        return aplicativoEntity;
     }
 
-    public void setAplicativo(Aplicativo aplicativo) {
-        this.aplicativo = aplicativo;
+    public void setAplicativo(AplicativoEntity aplicativoEntity) {
+        this.aplicativoEntity = aplicativoEntity;
     }
 
-    public Cliente getCliente() {
-        return cliente;
+    public ClienteEntity getCliente() {
+        return clienteEntity;
     }
 
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
+    public void setCliente(ClienteEntity clienteEntity) {
+        this.clienteEntity = clienteEntity;
     }
 
     public Date getInicio_vigencia() {
