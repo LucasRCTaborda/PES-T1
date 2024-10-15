@@ -138,7 +138,7 @@ public class Controller {
         return "Este é o endpoint do Controller!";
     }
     //----------------------------------------------------------------------------------------------------------------------
-    @GetMapping("")
+    @GetMapping("a")
     @CrossOrigin(origins = "*")
     public String welcomeMessage(){
         return "Bem vindo as lojas ACME";
