@@ -1,8 +1,6 @@
 package com.PAS_T1.PAS.aplicacao.dtos;
 
 
-
-
 import com.PAS_T1.PAS.dominio.modelos.AssinaturaModel;
 import com.PAS_T1.PAS.dominio.modelos.StatusATIVO;
 
@@ -26,16 +24,17 @@ public class AssinaturaDTO {
         this.statusATIVO = statusATIVO;
     }
 
+    // Construtor que converte AssinaturaModel para AssinaturaDTO
     public AssinaturaDTO(AssinaturaModel assinatura) {
         this.codigo = assinatura.getCodigo();
-        this.id_aplicativo = assinatura.getCodigo();
-        this.id_cliente = assinatura.getCodigo();
+        this.id_aplicativo = assinatura.getAplicativos().getCodigo(); // Corrigido para pegar o ID do aplicativo
+        this.id_cliente = assinatura.getClientes().getcodigo(); // Corrigido para pegar o ID do cliente
         this.inicioVigencia = assinatura.getInicioVigencia();
         this.fimVigencia = assinatura.getFimVigencia();
         this.statusATIVO = assinatura.verificarStatusValido();
-
     }
 
+    // Getters e Setters
     public long getCodigo() {
         return codigo;
     }
@@ -84,12 +83,15 @@ public class AssinaturaDTO {
         this.statusATIVO = statusATIVO;
     }
 
-    public static AssinaturaDTO fromModel(AssinaturaModel assinatura){
-            return new AssinaturaDTO(assinatura);
-        }
-
-
-
+    // Método estático para converter de AssinaturaModel para AssinaturaDTO
+    public static AssinaturaDTO fromModel(AssinaturaModel assinaturaModel) {
+        return new AssinaturaDTO(
+                assinaturaModel.getCodigo(),
+                assinaturaModel.getAplicativos().getCodigo(), // Corrigido para pegar o ID do aplicativo
+                assinaturaModel.getClientes().getcodigo(),    // Corrigido para pegar o ID do cliente
+                assinaturaModel.getInicioVigencia(),
+                assinaturaModel.getFimVigencia(),
+                assinaturaModel.verificarStatusValido()
+        );
     }
-
-
+}
