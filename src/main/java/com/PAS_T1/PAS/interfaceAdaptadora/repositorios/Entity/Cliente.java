@@ -14,7 +14,7 @@ public class Cliente {
     @GeneratedValue
     private long codigo;
     private String nome;
-    private String Email;
+    private String ëmail;
 
     public Cliente() {
     }
@@ -22,7 +22,7 @@ public class Cliente {
     public Cliente(long codigo, String nome, String email) {
         this.codigo = codigo;
         this.nome = nome;
-        Email = email;
+        ëmail = email;
     }
 
     public long getcodigo() {
@@ -38,18 +38,18 @@ public class Cliente {
     }
 
     public String getEmail() {
-        return Email;
+        return ëmail;
     }
 
     public void setEmail(String email) {
-        Email = email;
+        ëmail = email;
     }
 
-    public static Cliente fromClienteModel(ClienteModel cModel){
-        return new Cliente(cModel.getcodigo(),cModel.getNome(),cModel.getEmail());
+    public static Cliente fromClienteModel(ClienteModel cModel) {
+        return new Cliente(cModel.getcodigo(), cModel.getNome(), cModel.getEmail());
     }
 
-    public static ClienteModel toClienteModel(Cliente cli){
-        return new ClienteModel(cli.getcodigo(),cli.getNome(),cli.getEmail());
+    public static ClienteModel toClienteModel(Cliente cli) {
+        return new ClienteModel(cli.getcodigo(), cli.getNome(), cli.getEmail());
     }
 }

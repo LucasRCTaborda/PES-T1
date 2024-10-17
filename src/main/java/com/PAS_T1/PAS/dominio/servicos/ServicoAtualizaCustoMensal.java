@@ -11,7 +11,7 @@ public class ServicoAtualizaCustoMensal {
 
     private IAplicativoRepository aplicativo;
 
-    @Value("${novo.custo:}")  // Injeção de um valor default a partir de application.properties
+    @Value("${novo.custo:0}")  // Injeção de um valor default a partir de application.properties
     private double novoCusto;
 
     @Autowired

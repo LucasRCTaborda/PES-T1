@@ -8,7 +8,7 @@ CREATE TABLE Usuario (
                          nome VARCHAR(50),
                          senha VARCHAR(50)
 );
-
+/*
 -- Criação da tabela Cliente
 CREATE TABLE Cliente (
                          codigo INT PRIMARY KEY,
@@ -31,7 +31,7 @@ CREATE TABLE Pagamento (
                            valorPago DECIMAL(10, 2),
                            promocao VARCHAR(100),
                            FOREIGN KEY (id_assinatura) REFERENCES Aplicativo(codigo)
-);
+);*/
 
 -- Inserção de valores na tabela Usuario
 INSERT INTO Usuario (codigo, nome, senha) VALUES
@@ -46,7 +46,7 @@ INSERT INTO Usuario (codigo, nome, senha) VALUES
                                               (9, 'Fernanda', 'senha8'),
                                               (10, 'Rafael', 'senha9'),
                                               (11, 'Mariana', 'senha10');
-
+/*
 -- Inserção de valores na tabela Cliente
 INSERT INTO Cliente (codigo, nome, email) VALUES
                                               (1, 'Empresa A', 'empresa_a@example.com'),
@@ -85,3 +85,4 @@ INSERT INTO Pagamento (codigo, id_assinatura, valorPago, promocao) VALUES
                                                                        (8, 10, 120.00, 'Promoção 8'),
                                                                        (9, 11, 130.00, 'Promoção 9'),
                                                                        (10, 12, 140.00, 'Promoção 10');
+*/
