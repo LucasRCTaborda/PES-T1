@@ -1,14 +1,24 @@
 package com.PAS_T1.PAS.interfaceAdaptadora.controllers;
 
+import com.PAS_T1.PAS.dominio.modelos.ClienteModel;
+import com.PAS_T1.PAS.dominio.modelos.PagamentoModel;
+import com.PAS_T1.PAS.dominio.servicos.ClienteService;
 import com.PAS_T1.PAS.dominio.servicos.PagamentoService;
+import com.PAS_T1.PAS.interfaceAdaptadora.repositorios.JPARep.PagamentoJpa_itfRep;
+import com.PAS_T1.PAS.interfaceAdaptadora.repositorios.implemREpositorios.PagamentoRepJpa;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/pagamento")
-public record PagamentoController(PagamentoService pagamentoService) {
+public record PagamentoController(PagamentoService pagamentoService, PagamentoRepJpa pagamentoRepJpa) {
 
 
-
+    @GetMapping("/TodosPagamentos")
+    public List<PagamentoModel> todosClientes() {
+        return  pagamentoRepJpa.todos();
+    }
 
 
 

@@ -1,6 +1,5 @@
 package com.PAS_T1.PAS.interfaceAdaptadora.controllers;
 
-
 import com.PAS_T1.PAS.dominio.modelos.*;
 import com.PAS_T1.PAS.interfaceAdaptadora.repositorios.implemREpositorios.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,7 +55,7 @@ public class Controller {
     public List<UsuarioModel> todosUsuarios() {
         return usuarioRepJpa.todos();
     }
-//----------------------------------------------------------------------------------------------------------------------
+    //----------------------------------------------------------------------------------------------------------------------
     @PostMapping("/assinaturas/{codigodocliente}/{codigodoaplicativo}")
     public AssinaturaModel criaAssinatura(@PathVariable long codigodocliente, @PathVariable long codigodoaplicativo) {
         ClienteModel modelCliente = null;
@@ -102,14 +101,14 @@ public class Controller {
                 modelAplicativo = umapp;
                 break;
             }
-             um =modelAplicativo;
+            um =modelAplicativo;
 
             modelAplicativo.setCustoMensal(custo);
 
         }
 
         return um;
-        }
+    }
 
 
 
