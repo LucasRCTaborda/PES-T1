@@ -3,41 +3,39 @@ package com.PAS_T1.PAS.interfaceAdaptadora.controllers;
 
 import com.PAS_T1.PAS.dominio.modelos.ClienteModel;
 import com.PAS_T1.PAS.dominio.servicos.ClienteService;
+import com.PAS_T1.PAS.interfaceAdaptadora.repositorios.Entity.Cliente;
 import com.PAS_T1.PAS.interfaceAdaptadora.repositorios.implemREpositorios.ClienteRepJpa;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/Get/servcad/clientes")
 public record ClienteController(ClienteService clienteService, ClienteRepJpa clienteRepJpa) {
 
 
-
     @GetMapping("/todos")
     public List<ClienteModel> todosClientes() {
-      return  clienteRepJpa.todos();
+        return clienteRepJpa.todos();
     }
 
-
-
-
-
-    /*
-
-    @Autowired
-    public ClienteController(ClienteService clienteService) {
-        this.clienteService = clienteService;
-    }
 
     @PostMapping("/cadastrar")
     public ResponseEntity<Cliente> cadastrarCliente(@RequestBody Cliente cliente) {
-        Cliente novoCliente = clienteService.cadastrarCliente(cliente);
-        return ResponseEntity.status(HttpStatus.CREATED).body(novoCliente);
+        try {
+            Cliente novoCliente = clienteService.cadastrarCliente(cliente);  // Chama o serviço para salvar o cliente
+            return new ResponseEntity<>(novoCliente, HttpStatus.CREATED);    // Retorna 201 (Created)
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);  // Em caso de erro, retorna 500
+        }
     }
-// precisa atualizar porque estou usando o padrao
+
+
+
+    // precisa atualizar porque estou usando o padrao
     @PutMapping("/editar/{id}")
     public ResponseEntity<Cliente> editarCliente(@PathVariable Long id, @RequestBody Cliente clienteAtualizado) {
         Cliente clienteEditado = clienteService.editarCliente(id, clienteAtualizado);
@@ -69,5 +67,5 @@ public record ClienteController(ClienteService clienteService, ClienteRepJpa cli
         } else {
             return ResponseEntity.notFound().build();
         }
-    }*/
+    }
 }
