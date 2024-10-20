@@ -14,7 +14,7 @@ public class Cliente {
     @GeneratedValue
     private long codigo;
     private String nome;
-    private String ëmail;
+    private String email;
 
     public Cliente() {
     }
@@ -22,7 +22,7 @@ public class Cliente {
     public Cliente(long codigo, String nome, String email) {
         this.codigo = codigo;
         this.nome = nome;
-        ëmail = email;
+        email = email;
     }
 
     public long getcodigo() {
@@ -38,11 +38,11 @@ public class Cliente {
     }
 
     public String getEmail() {
-        return ëmail;
+        return email;
     }
 
     public void setEmail(String email) {
-        ëmail = email;
+        email = email;
     }
 
     public static Cliente fromClienteModel(ClienteModel cModel) {
