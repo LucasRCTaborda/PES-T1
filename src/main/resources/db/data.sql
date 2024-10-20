@@ -1,39 +1,9 @@
--- Exclusão das tabelas, se existirem
+-- USUARIO
 
-
-DROP TABLE IF EXISTS Usuario;
--- Criação da tabela Usuario
-CREATE TABLE Usuario (
-                         codigo INT PRIMARY KEY,
-                         nome VARCHAR(50),
-                         senha VARCHAR(50)
-);
-/*
--- Criação da tabela Cliente
-CREATE TABLE Cliente (
-                         codigo INT PRIMARY KEY,
-                         nome VARCHAR(100),
-                         email VARCHAR(100)
-);
-DROP TABLE IF EXISTS Aplicativo;
--- Criação da tabela Aplicativo
-CREATE TABLE Aplicativo (
-                            codigo INT PRIMARY KEY,
-                            nome VARCHAR(100),
-                            custoMensal DECIMAL(10, 2)
-);
-DROP TABLE IF EXISTS Pagamento;
-
--- Criação da tabela Pagamento
-CREATE TABLE Pagamento (
-                           codigo INT PRIMARY KEY,
-                           id_assinatura INT,
-                           valorPago DECIMAL(10, 2),
-                           promocao VARCHAR(100),
-                           FOREIGN KEY (id_assinatura) REFERENCES Aplicativo(codigo)
-);*/
-
--- Inserção de valores na tabela Usuario
+DROP TABLE IF EXISTS Usuario CASCADE;
+CREATE TABLE Usuario (codigo INT PRIMARY KEY,
+                      nome VARCHAR(50),
+                      senha VARCHAR(50));
 INSERT INTO Usuario (codigo, nome, senha) VALUES
                                               (1, 'Lucas', 'senha0'),
                                               (2, 'Maria', 'senha1'),
@@ -46,8 +16,13 @@ INSERT INTO Usuario (codigo, nome, senha) VALUES
                                               (9, 'Fernanda', 'senha8'),
                                               (10, 'Rafael', 'senha9'),
                                               (11, 'Mariana', 'senha10');
-/*
--- Inserção de valores na tabela Cliente
+
+-- CLIENTE
+
+DROP TABLE IF EXISTS Cliente CASCADE;
+CREATE TABLE Cliente (codigo INT PRIMARY KEY,
+                      nome VARCHAR(100),
+                      email VARCHAR(100));
 INSERT INTO Cliente (codigo, nome, email) VALUES
                                               (1, 'Empresa A', 'empresa_a@example.com'),
                                               (2, 'Empresa B', 'empresa_b@example.com'),
@@ -60,8 +35,15 @@ INSERT INTO Cliente (codigo, nome, email) VALUES
                                               (9, 'Empresa I', 'empresa_i@example.com'),
                                               (10, 'Empresa J', 'empresa_j@example.com');
 
--- Inserção de valores na tabela Aplicativo
+-- APLICATIVO
+
+DROP TABLE IF EXISTS Aplicativo CASCADE;
+CREATE TABLE Aplicativo (codigo INT PRIMARY KEY,
+                         nome VARCHAR(100),
+                         custoMensal DECIMAL(10, 2));
 INSERT INTO Aplicativo (codigo, nome, custoMensal) VALUES
+                                                       (3, 'Empresa X0', 150.00),
+                                                       (4, 'Empresa X00', 200.00),
                                                        (5, 'Empresa X1', 20),
                                                        (6, 'Empresa X2', 100),
                                                        (7, 'Empresa X3', 200),
@@ -73,7 +55,14 @@ INSERT INTO Aplicativo (codigo, nome, custoMensal) VALUES
                                                        (13, 'Empresa XIPTV', 800),
                                                        (14, 'Empresa XINSS', 1000);
 
--- Inserção de valores na tabela Pagamento
+-- PAGAMENTO
+
+DROP TABLE IF EXISTS Pagamento CASCADE;
+CREATE TABLE Pagamento (codigo INT PRIMARY KEY,
+                        id_assinatura INT,
+                        valorPago DECIMAL(10, 2),
+                        promocao VARCHAR(100),
+                        FOREIGN KEY (id_assinatura) REFERENCES Aplicativo(codigo));
 INSERT INTO Pagamento (codigo, id_assinatura, valorPago, promocao) VALUES
                                                                        (1, 3, 50.00, 'Promoção 1'),
                                                                        (2, 4, 60.00, 'Promoção 2'),
@@ -85,4 +74,3 @@ INSERT INTO Pagamento (codigo, id_assinatura, valorPago, promocao) VALUES
                                                                        (8, 10, 120.00, 'Promoção 8'),
                                                                        (9, 11, 130.00, 'Promoção 9'),
                                                                        (10, 12, 140.00, 'Promoção 10');
-*/
