@@ -1,23 +1,35 @@
 package com.PAS_T1.PAS.dominio.modelos;
 
-
-import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Column;
+import jakarta.persistence.Table;
 
+@Entity
+@Table(name = "Aplicativo")
 public class AplicativoModel {
+
     @Id
-    @GeneratedValue
     private long codigo;
+
     private String nome;
+
+    // Mapeamento correto da coluna "CUSTOMENSAL" no banco de dados
+    @Column(name = "CUSTOMENSAL")
     private double custoMensal;
 
+    // Construtor padrão (obrigatório para JPA)
+    public AplicativoModel() {
+    }
 
+    // Construtor com parâmetros
     public AplicativoModel(long codigo, String nome, double custoMensal) {
         this.codigo = codigo;
         this.nome = nome;
         this.custoMensal = custoMensal;
     }
 
+    // Getters e setters
     public long getCodigo() {
         return codigo;
     }

@@ -22,6 +22,7 @@ public class Controller {
     @Autowired
     private PagamentoRepJpa pagamentoRepJpa;
 
+    @Autowired
     public Controller(ClienteRepJpa clienteRepJpa,
                       AplicativoRepJpa aplicativoRepJpa,
                       AssinaturaRepJpa assinaturaRepJpa,
@@ -33,7 +34,6 @@ public class Controller {
         this.usuarioRepJpa = usuarioRepJpa;
         this.pagamentoRepJpa = pagamentoRepJpa;
     }
-
 
     //Lista com todos os clientes cadastrados
     @GetMapping("/clientes")

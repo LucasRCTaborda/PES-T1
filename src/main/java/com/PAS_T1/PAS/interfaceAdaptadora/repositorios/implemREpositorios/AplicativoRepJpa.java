@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class AplicativoRepJpa implements IAplicativoRepository {
@@ -34,14 +35,15 @@ public class AplicativoRepJpa implements IAplicativoRepository {
 
     @Override
     public AplicativoModel consultaPorId(long id) {
-        Aplicativo aplicativo = aplicativoRepository.findById(id);
-        System.out.println("Produto de codigo: " + id + ": " + aplicativo);
-        if (aplicativo == null) {
-            return null;
-        } else {
+        Optional<Aplicativo> aplicativoOptional = Optional.ofNullable(aplicativoRepository.findById(id));
+        if (aplicativoOptional.isPresent()) {
+            Aplicativo aplicativo = aplicativoOptional.get();
             return Aplicativo.toAplicativoModel(aplicativo);
+        } else {
+            return null; // Ou lance uma exceção, dependendo da sua lógica
         }
     }
+
 
     @Override
     public AplicativoModel AtualizaCusto(long id, double valor) {
@@ -56,6 +58,13 @@ public class AplicativoRepJpa implements IAplicativoRepository {
 
         }
         return umEx;
+    }
+
+    public void save(AplicativoModel aplicativoModel) {
+        // Converte o AplicativoModel em uma entidade Aplicativo
+        Aplicativo aplicativoEntity = Aplicativo.fromAplicativoModel(aplicativoModel);
+        // Salva a entidade no banco de dados usando o repositório JPA
+        aplicativoRepository.save(aplicativoEntity);
     }
 }
 
