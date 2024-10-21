@@ -40,8 +40,8 @@ INSERT INTO Cliente (codigo, nome, email) VALUES
 DROP TABLE IF EXISTS Aplicativo CASCADE;
 CREATE TABLE Aplicativo (codigo INT PRIMARY KEY,
                          nome VARCHAR(100),
-                         custoMensal DECIMAL(10, 2));
-INSERT INTO Aplicativo (codigo, nome, custoMensal) VALUES
+                         customensal DECIMAL(10, 2));
+INSERT INTO Aplicativo (codigo, nome, customensal) VALUES
                                                        (3, 'Empresa X0', 150.00),
                                                        (4, 'Empresa X00', 200.00),
                                                        (5, 'Empresa X1', 20),

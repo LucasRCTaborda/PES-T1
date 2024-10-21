@@ -12,7 +12,7 @@ public class Aplicativo {
     @GeneratedValue
     private long codigo;
     private String nome;
-    private double custoMensal;
+    private double CUSTOMENSAL;
 
     public Aplicativo() {
     }
@@ -20,7 +20,7 @@ public class Aplicativo {
     public Aplicativo(long codigo, String nome, double custoMensal) {
         this.codigo = codigo;
         this.nome = nome;
-        this.custoMensal = custoMensal;
+        this.CUSTOMENSAL = custoMensal;
     }
 
     public long getCodigo() {
@@ -36,11 +36,11 @@ public class Aplicativo {
     }
 
     public double getCustoMensal() {
-        return custoMensal;
+        return CUSTOMENSAL;
     }
 
     public void setCustoMensal(double custoMensal) {
-        this.custoMensal = custoMensal;
+        this.CUSTOMENSAL = custoMensal;
     }
 
     public static Aplicativo fromAplicativoModel(AplicativoModel apModel){
