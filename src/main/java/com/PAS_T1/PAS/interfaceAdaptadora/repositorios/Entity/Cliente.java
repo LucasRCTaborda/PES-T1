@@ -16,13 +16,14 @@ public class Cliente {
     private String nome;
     private String email;
 
-    public Cliente() {
-    }
-
     public Cliente(long codigo, String nome, String email) {
         this.codigo = codigo;
         this.nome = nome;
-        email = email;
+        this.email = email;  // Corrigido para usar o "this.email"
+    }
+
+    public Cliente() {
+
     }
 
     public long getcodigo() {
@@ -46,7 +47,7 @@ public class Cliente {
     }
 
     public static Cliente fromClienteModel(ClienteModel cModel) {
-        return new Cliente(cModel.getcodigo(), cModel.getNome(), cModel.getEmail());
+        return new Cliente(cModel.getCodigo(), cModel.getNome(), cModel.getEmail());
     }
 
     public static ClienteModel toClienteModel(Cliente cli) {

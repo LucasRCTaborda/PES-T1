@@ -7,81 +7,96 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 
-import java.util.Date;
+import java.time.LocalDate;
+
 
 @Entity
 public class Assinatura {
+
+
 
     @Id
     @GeneratedValue
     private long codigo;
 
-    private Date inicioVigencia;
-
-    private Date fimVigencia;
-    @ManyToOne
-    private Aplicativo aplicativo;
+    private LocalDate inicioVigencia;
+    private LocalDate fimVigencia;
 
     @ManyToOne
     private Cliente cliente;
 
+    @ManyToOne
+    private Aplicativo aplicativo;
+
     private StatusATIVO statusATIVO;
+    private String codAssinatura;
+
 
     public Assinatura() {
-
     }
 
-    public StatusATIVO getStatusATIVO() {
-        return statusATIVO;
-    }
-
-    public Assinatura(long codigo, long id_aplicativo, long id_cliente, Date inicioVigencia, Date fimVigencia, StatusATIVO statusATIVO) {
+    public Assinatura(long codigo, Cliente cliente, Aplicativo aplicativo, LocalDate inicioVigencia, LocalDate fimVigencia, StatusATIVO statusATIVO, String codAssinatura) {
         this.codigo = codigo;
+        this.cliente = cliente;
+        this.aplicativo = aplicativo;
         this.inicioVigencia = inicioVigencia;
         this.fimVigencia = fimVigencia;
-        this.aplicativo = aplicativo;
-        this.cliente = cliente;
         this.statusATIVO = statusATIVO;
+        this.codAssinatura = codAssinatura;
     }
 
-    // Getters e Setters
+    @Override
+    public String toString() {
+        return "Assinatura{" +
+                "codigo=" + codigo +
+                ", inicioVigencia=" + inicioVigencia +
+                ", fimVigencia=" + fimVigencia +
+                ", clienteModel=" + cliente+
+                ", aplicativos=" + aplicativo +
+                ", statusATIVO=" + statusATIVO +
+                ", codAssinatura='" + codAssinatura + '\'' +
+                '}';
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Assinatura)) return false;
+        Assinatura that = (Assinatura) o;
+        return codigo == that.codigo;
+    }
+
+    @Override
+    public int hashCode() {
+        return Long.hashCode(codigo);
+    }
+
     public long getCodigo() {
         return codigo;
     }
 
-    public void setCodigo(long codigo) {
-        this.codigo = codigo;
+    public LocalDate getInicioVigencia() {
+        return inicioVigencia;
     }
 
-    public Aplicativo getAplicativo() {
-        return aplicativo;
-    }
-
-    public void setAplicativo(Aplicativo aplicativo) {
-        this.aplicativo = aplicativo;
+    public LocalDate getFimVigencia() {
+        return fimVigencia;
     }
 
     public Cliente getCliente() {
         return cliente;
     }
 
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
+    public Aplicativo getAplicativo() {
+        return aplicativo;
     }
 
-    public Date getInicioVigencia() {
-        return inicioVigencia;
+    public StatusATIVO getStatusATIVO() {
+        return statusATIVO;
     }
 
-    public void setInicioVigencia(Date inicioVigencia) {
-        this.inicioVigencia = inicioVigencia;
-    }
-
-    public Date getFimVigencia() {
-        return fimVigencia;
-    }
-
-    public void setFimVigencia(Date fimVigencia) {
-        this.fimVigencia = fimVigencia;
+    public String getCodAssinatura() {
+        return codAssinatura;
     }
 }

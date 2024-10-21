@@ -1,7 +1,6 @@
 package com.PAS_T1.PAS.aplicacao.casosDeUso;
 
 import com.PAS_T1.PAS.aplicacao.dtos.AplicativoDTO;
-import com.PAS_T1.PAS.dominio.modelos.AplicativoModel;
 import com.PAS_T1.PAS.dominio.servicos.AplicativoService;
 
 import java.util.List;

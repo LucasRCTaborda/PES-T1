@@ -73,7 +73,7 @@ public class Controller {
 
         List<ClienteModel> todosClientes = clienteRepJpa.todos();
         for (ClienteModel umcliente : todosClientes) {
-            if (umcliente.getcodigo() == codigodocliente) {
+            if (umcliente.getCodigo() == codigodocliente) {
                 modelCliente = umcliente;
                 break;
             }
@@ -90,7 +90,7 @@ public class Controller {
 
         AssinaturaModel assinaturaModel = new AssinaturaModel();
         if (modelCliente != null && modelAplicativo != null) {
-            assinaturaModel = assinaturaModel.criarAssinaturaComClienteEAplicativo(modelCliente, modelAplicativo);
+        //    assinaturaM(modelCliente, modelAplicativo);
         } else {
 
         }

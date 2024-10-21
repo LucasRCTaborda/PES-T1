@@ -1,6 +1,5 @@
 package com.PAS_T1.PAS.dominio.modelos;
 
-
 import com.PAS_T1.PAS.interfaceAdaptadora.repositorios.implemREpositorios.ClienteRepJpa;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -9,20 +8,21 @@ import java.util.List;
 
 public class ClienteModel {
 
-
     @Id
     @GeneratedValue
     private long codigo;
     private String nome;
-    private String Email;
+    private String email;  // Corrigido para "email" em minúsculas
 
+    // Construtor
     public ClienteModel(long codigo, String nome, String email) {
         this.codigo = codigo;
         this.nome = nome;
-        Email = email;
+        this.email = email;  // Corrigido para usar "this.email"
     }
 
-    public long getcodigo() {
+    // Getters e Setters
+    public long getCodigo() {
         return codigo;
     }
 
@@ -35,24 +35,24 @@ public class ClienteModel {
     }
 
     public String getEmail() {
-        return Email;
+        return email;  // Corrigido para "email"
     }
 
     public void setEmail(String email) {
-        Email = email;
+        this.email = email;  // Corrigido para "this.email"
     }
 
-    private final ClienteRepJpa clienteRepJpa = null;
+    // Acesso ao repositório deve ser feito em outro lugar (injetar o repositório em um serviço)
+    // private final ClienteRepJpa clienteRepJpa = null;
 
-    public ClienteModel encontrCliente(long codigoCliente) {
+    // Este método deve ser movido para o serviço que usa ClienteModel
+    public ClienteModel encontrarCliente(long codigoCliente, ClienteRepJpa clienteRepJpa) {
         ClienteModel modelCliente = null;
 
         List<ClienteModel> todosClientes = clienteRepJpa.todos();
-        for (ClienteModel umcliente : todosClientes) {
-            long codx = umcliente.getcodigo();
-
-            if (codx == codigoCliente) {
-                modelCliente = umcliente;
+        for (ClienteModel umCliente : todosClientes) {
+            if (umCliente.getCodigo() == codigoCliente) {
+                modelCliente = umCliente;
                 break;
             }
         }
@@ -65,9 +65,7 @@ public class ClienteModel {
         return "ClienteModel{" +
                 "codigo=" + codigo +
                 ", nome='" + nome + '\'' +
-                ", Email='" + Email + '\'' +
+                ", email='" + email + '\'' +  // Corrigido para "email"
                 '}';
     }
-
-
 }

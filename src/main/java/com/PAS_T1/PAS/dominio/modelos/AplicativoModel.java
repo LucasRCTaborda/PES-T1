@@ -5,8 +5,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Column;
 import jakarta.persistence.Table;
 
-@Entity
-@Table(name = "Aplicativo")
+
 public class AplicativoModel {
 
     @Id

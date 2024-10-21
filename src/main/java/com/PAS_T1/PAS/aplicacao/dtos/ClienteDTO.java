@@ -54,6 +54,6 @@ public class ClienteDTO {
                 '}';
     }
     public static ClienteDTO fromModel(ClienteModel cliente){
-        return new ClienteDTO(cliente.getcodigo(), cliente.getNome(), cliente.getEmail());
+        return new ClienteDTO(cliente.getCodigo(), cliente.getNome(), cliente.getEmail());
     }
 }
