@@ -23,8 +23,6 @@ public class ClienteService {
         return clienteJpaItfRep.save(cliente);
     }
 
-
-
     public void delete(Cliente cliente) {
         clienteJpaItfRep.delete(cliente);
     }

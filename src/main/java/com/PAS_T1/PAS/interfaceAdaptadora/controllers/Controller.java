@@ -1,5 +1,7 @@
 package com.PAS_T1.PAS.interfaceAdaptadora.controllers;
 
+import com.PAS_T1.PAS.aplicacao.casosDeUso.TodosOsAplicativos;
+import com.PAS_T1.PAS.aplicacao.dtos.AplicativoDTO;
 import com.PAS_T1.PAS.dominio.modelos.*;
 import com.PAS_T1.PAS.interfaceAdaptadora.repositorios.implemREpositorios.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +45,13 @@ public class Controller {
     @GetMapping("/aplicativos")
     public List<AplicativoModel> todosAplicativos() {
         return aplicativoRepJpa.todos();
+    }
+
+    @GetMapping("todosAplicativos")
+    @CrossOrigin(origins = "*")
+    public List<AplicativoDTO> todosAplicativosx(){
+        TodosOsAplicativos todosapp = null;
+        return todosapp.run();
     }
 
     //----------------------------------------------------------------------------------------------------------------------

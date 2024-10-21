@@ -14,7 +14,7 @@ public record AplicativoController(AtualizaCusto aplicativoService) {
 
 
 
-
+    
 
 
 
@@ -49,7 +49,7 @@ public record AplicativoController(AtualizaCusto aplicativoService) {
   /*  public AplicativoController(AtualizaCusto aplicativoService) {
         this.aplicativoService = aplicativoService;
     }
-
+    
     @GetMapping
     public ResponseEntity<List<Aplicativo>> listarAplicativos() {
         List<Aplicativo> aplicativos = aplicativoService.listarAplicativos();
