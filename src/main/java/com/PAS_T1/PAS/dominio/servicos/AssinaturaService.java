@@ -107,4 +107,17 @@ public class AssinaturaService {
             return idAssinatura;
         }
     }
+
+    public AssinaturaModel createNewAssinatura(AssinaturaDTO assinaturaDTO) {
+        AssinaturaModel assinatura = new AssinaturaModel();
+        assinatura.setCodigo(assinaturaDTO.getCodigo());
+        assinatura.setId_aplicativo(assinaturaDTO.getId_aplicativo());
+        assinatura.setId_cliente(assinaturaDTO.getId_cliente());
+        assinatura.setInicioVigencia(assinaturaDTO.getInicioVigencia());
+        assinatura.setFimVigencia(assinaturaDTO.getFimVigencia());
+        assinatura.setStatusATIVO(assinaturaDTO.getStatusATIVO());
+        assinatura.setCodAssinatura(assinaturaDTO.getCodAssinatura());
+
+        return assinaturaRepository.save(assinatura);
+    }
 }

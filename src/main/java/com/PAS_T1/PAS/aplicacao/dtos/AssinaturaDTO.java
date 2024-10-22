@@ -6,7 +6,7 @@ import com.PAS_T1.PAS.dominio.modelos.StatusATIVO;
 import java.util.Date;
 
 public class AssinaturaDTO {
-/*
+
     private long codigo;
     private long id_aplicativo;
     private long id_cliente;
@@ -100,8 +100,8 @@ public class AssinaturaDTO {
                 assinaturaModel.getAplicativo().getId(),
                 assinaturaModel.getCliente().getId(),
                 assinaturaModel.getInicioVigencia(),
-                assinaturaModel.getFimVigencia(),
+                assinaturaModel.getFimVigencia()
 
         );
-    }*/
+    }
 }

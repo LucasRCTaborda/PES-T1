@@ -54,6 +54,11 @@ public class AssinaturaController {
         return new AssinaturaDTO(assinaturaModel.getFimVigencia(), assinaturaModel.getId());
     }
 
+    @PostMapping("/servcard/assinaturas/create")
+    public ResponseEntity<AssinaturaModel> createAssinatura(@RequestBody AssinaturaDTO assinaturaDTO) {
+        AssinaturaModel newAssinatura = assinaturaService.createNewAssinatura(assinaturaDTO);
+        return new ResponseEntity<>(newAssinatura, HttpStatus.CREATED);
+    }
 
     public static class RequestBodyObject {
         private long codCliente;
