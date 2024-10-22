@@ -68,6 +68,7 @@ public class PagamentoController {
         Resposta resposta = new Resposta();
         Date date = new Date(Integer.parseInt(ano), Integer.parseInt(mes), Integer.parseInt(dia));
         String promocao = "some promotion";
+
         if (valorPago >= custoMensal) {
             PagamentoModel pagamento = new PagamentoModel(1, assinatura, valorPago, date, promocao);
             resposta.status = "PAGAMENTO_OK";
@@ -78,9 +79,9 @@ public class PagamentoController {
             calendar.setTime(date);
             calendar.add(Calendar.MONTH, 1);
             Date nowInAMonth = calendar.getTime();
-
             assinatura.setFimVigencia(nowInAMonth);
             assinaturaService.saveAssinatura(assinatura);
+            pagamentoService.generatePaymentNotification(assinatura, valorPago, date);
 
         } else {
             resposta.status = "VALOR_INCORRETO";

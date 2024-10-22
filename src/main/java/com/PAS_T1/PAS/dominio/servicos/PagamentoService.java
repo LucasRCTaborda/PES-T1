@@ -18,6 +18,14 @@ public class PagamentoService {
     public PagamentoModel registrarPagamento(PagamentoModel pagamento) {
         return pagamentoRepositoryImpl.save(pagamento);
     }
+
+    private void generatePaymentNotification(PagamentoModel pagamento) {
+        String message = "Pagamento feito por assinatura de ID: " + pagamento.getAssinaturaId() + 
+                         ", Quantia: " + pagamento.getValor() +
+                         ", Data: " + pagamento.getDataPagamento();
+        
+        System.out.println(message);
+    }
 }
 
 
