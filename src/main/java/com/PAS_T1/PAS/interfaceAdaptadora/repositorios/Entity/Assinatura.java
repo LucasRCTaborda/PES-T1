@@ -1,102 +1,86 @@
 package com.PAS_T1.PAS.interfaceAdaptadora.repositorios.Entity;
 
 
+import com.PAS_T1.PAS.dominio.modelos.AssinaturaModel;
 import com.PAS_T1.PAS.dominio.modelos.StatusATIVO;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 
 @Entity
+@Table(name = "assinaturas")
 public class Assinatura {
-
-
-
     @Id
-    @GeneratedValue
-    private long codigo;
-
-    private LocalDate inicioVigencia;
-    private LocalDate fimVigencia;
+    private long id;
 
     @ManyToOne
-    private Cliente cliente;
-
-    @ManyToOne
+    @JoinColumn(name = "aplicativo_id")
     private Aplicativo aplicativo;
 
-    private StatusATIVO statusATIVO;
-    private String codAssinatura;
+    @ManyToOne
+    @JoinColumn(name = "cliente_id")
+    private Cliente cliente;
 
+    private Date inicioVigencia;
+    private Date fimVigencia;
 
-    public Assinatura() {
-    }
+    protected Assinatura() {}
 
-    public Assinatura(long codigo, Cliente cliente, Aplicativo aplicativo, LocalDate inicioVigencia, LocalDate fimVigencia, StatusATIVO statusATIVO, String codAssinatura) {
-        this.codigo = codigo;
-        this.cliente = cliente;
+    public Assinatura(long id, Aplicativo aplicativo, Cliente cliente, Date inicioVigencia, Date fimVigencia) {
+        this.id = id;
         this.aplicativo = aplicativo;
+        this.cliente = cliente;
         this.inicioVigencia = inicioVigencia;
         this.fimVigencia = fimVigencia;
-        this.statusATIVO = statusATIVO;
-        this.codAssinatura = codAssinatura;
     }
 
-    @Override
-    public String toString() {
-        return "Assinatura{" +
-                "codigo=" + codigo +
-                ", inicioVigencia=" + inicioVigencia +
-                ", fimVigencia=" + fimVigencia +
-                ", clienteModel=" + cliente+
-                ", aplicativos=" + aplicativo +
-                ", statusATIVO=" + statusATIVO +
-                ", codAssinatura='" + codAssinatura + '\'' +
-                '}';
-    }
-
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Assinatura)) return false;
-        Assinatura that = (Assinatura) o;
-        return codigo == that.codigo;
-    }
-
-    @Override
-    public int hashCode() {
-        return Long.hashCode(codigo);
-    }
-
-    public long getCodigo() {
-        return codigo;
-    }
-
-    public LocalDate getInicioVigencia() {
-        return inicioVigencia;
-    }
-
-    public LocalDate getFimVigencia() {
-        return fimVigencia;
-    }
-
-    public Cliente getCliente() {
-        return cliente;
+    public long getId() {
+        return id;
     }
 
     public Aplicativo getAplicativo() {
         return aplicativo;
     }
 
-    public StatusATIVO getStatusATIVO() {
-        return statusATIVO;
+    public Cliente getCliente() {
+        return cliente;
     }
 
-    public String getCodAssinatura() {
-        return codAssinatura;
+    public Date getInicioVigencia() {
+        return inicioVigencia;
+    }
+
+    public Date getFimVigencia() {
+        return fimVigencia;
+    }
+
+    public void setFimVigencia(Date fimVigencia) {
+        this.fimVigencia = fimVigencia;
+    }
+
+    public boolean isActive() {
+        return inicioVigencia.before(new Date()) && fimVigencia.after(new Date());
+    }
+
+    public static AssinaturaModel toAssinaturaModel(Assinatura assinatura) {
+        return new AssinaturaModel(
+                assinatura.getId(),
+                Aplicativo.toAplicativoModel(assinatura.getAplicativo()),
+                Cliente.toClienteModel(assinatura.getCliente()),
+                assinatura.getInicioVigencia(),
+                assinatura.getFimVigencia()
+        );
+    }
+
+    public static Assinatura fromAssinaturaModel(AssinaturaModel assinaturaModel) {
+        return new Assinatura(
+                assinaturaModel.getId(),
+                Aplicativo.fromAplicativoModel(assinaturaModel.getAplicativo()),
+                Cliente.fromClienteModel(assinaturaModel.getCliente()),
+                assinaturaModel.getInicioVigencia(),
+                assinaturaModel.getFimVigencia()
+        );
     }
 }

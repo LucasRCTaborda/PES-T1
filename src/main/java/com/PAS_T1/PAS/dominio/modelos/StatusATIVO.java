@@ -2,7 +2,8 @@ package com.PAS_T1.PAS.dominio.modelos;
 
 public enum StatusATIVO {
     ATIVO(1),
-    CANCELADO(2);
+    CANCELADO(2),
+    TODAS(3) ;
 
     private int code;
 

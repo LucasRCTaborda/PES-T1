@@ -1,63 +1,40 @@
 package com.PAS_T1.PAS.dominio.modelos;
 
 
-import com.PAS_T1.PAS.interfaceAdaptadora.repositorios.Entity.Assinatura;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import java.util.Date;
 
 public class PagamentoModel {
-
-
-    @Id
-    @GeneratedValue
-    private long codigo;
-    private Assinatura assinatura;
-    private double valorPago;
+    long id;
+    private AssinaturaModel assinatura;
+    private double valor;
+    private Date dataPagamento;
     private String promocao;
 
-    public PagamentoModel(long codigo, Assinatura assinatura, double valorPago, String promocao) {
-        this.codigo = codigo;
+    public PagamentoModel(long id, AssinaturaModel assinatura, double valor, Date dataPagamento, String promocao) {
+        this.id = id;
         this.assinatura = assinatura;
-        this.valorPago = valorPago;
+        this.valor = valor;
+        this.dataPagamento = dataPagamento;
         this.promocao = promocao;
     }
 
-    public long getCodigo() {
-        return codigo;
+    public long getId() {
+        return id;
     }
 
-
-    public Assinatura getAssinatura() {
+    public AssinaturaModel getAssinatura() {
         return assinatura;
     }
 
-    public void setAssinatura(Assinatura assinatura) {
-        this.assinatura = assinatura;
+    public double getValor() {
+        return valor;
     }
 
-    public double getValorPago() {
-        return valorPago;
-    }
-
-    public void setValorPago(double valorPago) {
-        this.valorPago = valorPago;
+    public Date getDataPagamento() {
+        return dataPagamento;
     }
 
     public String getPromocao() {
         return promocao;
-    }
-
-    public void setPromocao(String promocao) {
-        this.promocao = promocao;
-    }
-
-    @Override
-    public String toString() {
-        return "PagamentoModel{" +
-                "codigo=" + codigo +
-                ", assinatura=" + assinatura +
-                ", valorPago=" + valorPago +
-                ", promocao='" + promocao + '\'' +
-                '}';
     }
 }

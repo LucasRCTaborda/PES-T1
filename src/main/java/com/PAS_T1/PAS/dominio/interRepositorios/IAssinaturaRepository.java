@@ -6,13 +6,20 @@ import com.PAS_T1.PAS.dominio.modelos.AssinaturaModel;
 import com.PAS_T1.PAS.dominio.modelos.ClienteModel;
 
 import java.util.List;
-import java.util.Optional;
 
-public interface IAssinaturaRepository  {
-    List<AssinaturaModel> todosAssinatura ();
-    List<AplicativoModel> todosAplicativos();
-    List<ClienteModel> todosClientes();
+public interface IAssinaturaRepository {
+    List<AssinaturaModel> findAll();
+    List<AssinaturaModel> findByCliente(ClienteModel cliente);
+    List<AssinaturaModel> findByAplicativo(AplicativoModel aplicativo);
+    List<AssinaturaModel> findByAplicativoId(Long id);
+    List<AssinaturaModel> findByClienteId(long id);
+    AssinaturaModel findById(long id);
 
-    Optional<AssinaturaModel> consultaPorId(Long codigo);
-    AssinaturaModel ConsultaporIdAssinatura(long codigo);
+    List<AssinaturaModel> findActiveAssinaturas();
+
+    List<AssinaturaModel> findInactiveAssinaturas();
+
+    Long findLastAssinaturaId();
+
+    AssinaturaModel save(AssinaturaModel assinatura);
 }

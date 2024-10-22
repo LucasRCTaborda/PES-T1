@@ -1,39 +1,25 @@
 package com.PAS_T1.PAS.dominio.modelos;
 
-
 public class UsuarioModel {
-    private long codigo;
-    private String usuario;
-    private String senha;
+    long id;
+    String login;
+    String password;
 
-    public UsuarioModel(long id,String usuario, String senha) {
-        this.codigo=id;
-        this.usuario = usuario;
-        this.senha = senha;
+    public UsuarioModel(long id, String login, String password) {
+        this.id = id;
+        this.login = login;
+        this.password = password;
     }
 
-    public long getCodigo() {
-        return codigo;
+    public long getId() {
+        return id;
     }
 
-    public String getUsuario() {
-        return usuario;
+    public String getLogin() {
+        return login;
     }
 
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
-
-    @Override
-    public String toString() {
-        return "UsuarioModel{" +
-                "codigo=" + codigo +
-                ", usuario='" + usuario + '\'' +
-                ", senha='" + senha + '\'' +
-                '}';
+    public String getPassword() {
+        return password;
     }
 }

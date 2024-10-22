@@ -5,15 +5,17 @@ import org.springframework.stereotype.Service;
 @Service
 public class PagamentoService {
 
+    private final PagamentoRepositoryImpl pagamentoRepositoryImpl;
 
+    @Autowired
+    public PagamentoService(PagamentoRepositoryImpl pagamentoRepositoryImpl) {
+        this.pagamentoRepositoryImpl = pagamentoRepositoryImpl;
+    }
 
-
-
-
-
-
-
-
+    public PagamentoModel registrarPagamento(PagamentoModel pagamento) {
+        return pagamentoRepositoryImpl.save(pagamento);
+    }
+}
 
 
 

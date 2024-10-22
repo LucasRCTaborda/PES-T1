@@ -3,149 +3,106 @@ package com.PAS_T1.PAS.dominio.servicos;
 import com.PAS_T1.PAS.aplicacao.casosDeUso.CriarAssinatura;
 import com.PAS_T1.PAS.aplicacao.dtos.AssinaturaDTO;
 import com.PAS_T1.PAS.dominio.modelos.AplicativoModel;
+import com.PAS_T1.PAS.dominio.modelos.AssinaturaModel;
 import com.PAS_T1.PAS.dominio.modelos.ClienteModel;
+import com.PAS_T1.PAS.dominio.modelos.StatusATIVO;
+import com.PAS_T1.PAS.interfaceAdaptadora.repositorios.implemREpositorios.RepoImpl.AplicativoRepositoryImpl;
+import com.PAS_T1.PAS.interfaceAdaptadora.repositorios.implemREpositorios.RepoImpl.AssinaturaRepositoryImpl;
+import com.PAS_T1.PAS.interfaceAdaptadora.repositorios.implemREpositorios.RepoImpl.ClienteRepositoryImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+
 @Service
 public class AssinaturaService {
 
+    private AssinaturaRepositoryImpl assinaturaRepositoryImpl;
+    private AplicativoRepositoryImpl aplicativoRepositoryImpl;
+    private ClienteRepositoryImpl clienteRepositoryImpl;
+    private RabbitTemplate rabbitTemplate;
+    private FanoutExchange fanout;
 
-}
-
-
-    /*
- private final AssinaturaJPA_itfRep assinaturaJPAItfRep;
-    private final ClienteRepJpa clienteRepJpa;
-    private final AplicativoRepJpa aplicativoRepJpa;
-    private final AssinaturaJPA_itfRep assinaturaJPAItfRep;
-
-    private final AtomicLong contadorAssinaturas = new AtomicLong(0); // Contador para as assinaturas
-
-    public AssinaturaService(ClienteRepJpa clienteRepJpa, AplicativoRepJpa aplicativoRepJpa, AssinaturaJPA_itfRep assinaturaJPAItfRep) {
-        this.clienteRepJpa = clienteRepJpa;
-        this.aplicativoRepJpa = aplicativoRepJpa;
-        this.assinaturaJPAItfRep = assinaturaJPAItfRep;
+    @Autowired
+    public AssinaturaService(AssinaturaRepositoryImpl assinaturaRepositoryImpl, AplicativoRepositoryImpl aplicativoRepositoryImpl, ClienteRepositoryImpl clienteRepositoryImpl, RabbitTemplate rabbitTemplate , FanoutExchange fanout) {
+        this.assinaturaRepositoryImpl = assinaturaRepositoryImpl;
+        this.aplicativoRepositoryImpl = aplicativoRepositoryImpl;
+        this.clienteRepositoryImpl = clienteRepositoryImpl;
+        this.rabbitTemplate = rabbitTemplate;
+        this.fanout = fanout;
     }
 
-    public AssinaturaModel criarAssinatura(Long codigoCliente, Long codigoAplicativo) {
-        // Consultar o cliente e o aplicativo
-        ClienteModel cliente = clienteRepJpa.consultaPorId(codigoCliente);
-        AplicativoModel aplicativo = aplicativoRepJpa.consultaPorId(codigoAplicativo);
+    public List<AssinaturaModel> getFromAppId(long appId) {
+        return this.assinaturaRepositoryImpl.findByAplicativoId(appId);
+    }
 
-        // Verificar se cliente e aplicativo foram encontrados
+    public List<AssinaturaModel> getFromClienteId(long clienteId) {
+        return this.assinaturaRepositoryImpl.findByClienteId(clienteId);
+    }
+
+    public List<AssinaturaModel> getFromType(StatusATIVO type) {
+        if (type == StatusATIVO.TODAS) {
+            return this.assinaturaRepositoryImpl.findAll();
+        } else if (type == StatusATIVO.ATIVO) {
+            return this.assinaturaRepositoryImpl.findActiveAssinaturas();
+        } else if (type == StatusATIVO.CANCELADO) {
+            return this.assinaturaRepositoryImpl.findInactiveAssinaturas();
+        }
+        return null;
+    }
+
+    public AssinaturaModel criaNovaAssinatura(long codCliente, long codAplicativo) {
+        ClienteModel cliente = clienteRepositoryImpl.findById(codCliente);
         if (cliente == null) {
-            throw new IllegalArgumentException("Cliente não encontrado.");
+            throw new IllegalArgumentException("Cliente not found with ID: " + codCliente);
         }
+
+        AplicativoModel aplicativo = aplicativoRepositoryImpl.findById(codAplicativo);
+
         if (aplicativo == null) {
-            throw new IllegalArgumentException("Aplicativo não encontrado.");
+            throw new IllegalArgumentException("Aplicativo not found with ID: " + codAplicativo);
         }
 
-        // Gerar código de assinatura
-        String codigoAssinatura = gerarCodigoAssinatura();
-
-        LocalDate dataInicio = LocalDate.now();
-        LocalDate dataFim = dataInicio.plusDays(30); // Assinatura válida por 30 dias
-
-        // Criar a nova assinatura
-        AssinaturaModel novaAssinatura = new AssinaturaModel(codigoAssinatura, cliente, aplicativo, dataInicio, dataFim,);
-        assinaturaJPAItfRep.save(novaAssinatura); // Persistindo a nova assinatura
-
-        return novaAssinatura;
-    }
-
-    private String gerarCodigoAssinatura() {
-        // Incrementa o contador e gera o código
-        long numeroAssinatura = contadorAssinaturas.incrementAndGet(); // Incrementa o contador
-        return "AS-" + LocalDate.now().toString().replace("-", "") + "-" + String.format("%03d", numeroAssinatura); // Formato: AS-20231020-001
-    }
-    public AssinaturaModel criarAssinaturaComClienteEAplicativo(ClienteModel cliente, AplicativoModel aplicativo) {
-
-        AssinaturaModel assinatura = new AssinaturaModel();
-
-
-        assinatura.setClientes(cliente);
-        assinatura.setAplicativos(aplicativo);
-
-
-        Date inicio = new Date();
-        Date fim = adicionarDias(inicio, 30);
-        assinatura.setInicioVigencia(inicio);
-        assinatura.setFimVigencia(fim);
-        assinatura.verificarStatusValido();
-
-
-        return assinatura;
-    }
-
-    // Método para adicionar dias a uma data
-    private Date adicionarDias(Date data, int dias) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(data);
-        calendar.add(Calendar.DAY_OF_MONTH, dias);
-        return calendar.getTime();
-    }
-
-
-    public Date inicioDate() {
-        LocalDate dataAtual = LocalDate.now();
-        Date date = java.sql.Date.valueOf(dataAtual);
-        return date;
-    }
-
-    public static Date fimdate() {
-        AssinaturaModel m1 = null;
-        Date umDate = m1.getInicioVigencia();
+        long id = assinaturaRepositoryImpl.findLastAssinaturaId() + 1;
+        Date now = new Date();
 
         Calendar calendar = Calendar.getInstance();
-        calendar.setTime(umDate);
-        calendar.add(Calendar.DAY_OF_MONTH, 30);
-        return calendar.getTime();
+
+        calendar.setTime(now);
+
+        calendar.add(Calendar.MONTH, 1);
+
+        Date nowInAMonth = calendar.getTime();
+        AssinaturaModel nova = new AssinaturaModel(id, aplicativo,cliente, now, nowInAMonth);
+
+        return assinaturaRepositoryImpl.save(nova);
     }
 
+    public AssinaturaModel getFromAssinaturaId(long assinaturaId) {
+        return this.assinaturaRepositoryImpl.findById(assinaturaId);
+    }
 
-    private final AssinaturaRepJpa assinaturaRepJpa = null;
+    public void saveAssinatura(AssinaturaModel assinatura){
+        AssinaturaDTO assinaturaDto = new AssinaturaDTO(assinatura.getFimVigencia(), assinatura.getId());
+        rabbitTemplate.convertAndSend(fanout.getName(),"",assinaturaDto);
+        this.assinaturaRepositoryImpl.save(assinatura);
+    }
 
-    public AplicativoModel encontraAplicativo(long codigoAplicativo) {
-        AplicativoModel modelAplicativo = null;
+    public class AssinaturaDTO {
+        private Date expirationDate;
+        private Long idAssinatura;
 
-        List<AplicativoModel> todosAplicativos = assinaturaRepJpa.todosAplicativos();
-        for (AplicativoModel umAplicativo : todosAplicativos) {
-            long codx = umAplicativo.getCodigo();
-
-            if (codx == codigoAplicativo) {
-                modelAplicativo = umAplicativo;
-                break;
-            }
+        AssinaturaDTO(Date expirationDate, Long idAssinatura) {
+            this.expirationDate = expirationDate;
+            this.idAssinatura = idAssinatura;
         }
 
-        return modelAplicativo;
-    }
-
-    private final ClienteRepJpa clienteRepJpa = null;
-
-    public ClienteModel encontrCliente(long codigoCliente) {
-        ClienteModel modelCliente = null;
-
-        List<ClienteModel> todosClientes = clienteRepJpa.todos();
-        for (ClienteModel umcliente : todosClientes) {
-            long codx = umcliente.getCodigo();
-
-            if (codx == codigoCliente) {
-                modelCliente = umcliente;
-                break;
-            }
+        public Date getExpirationDate() {
+            return expirationDate;
         }
 
-        return modelCliente;
-    }
-
-    public StatusATIVO verificarStatusValido() {
-        Date inicio = inicioDate();
-        Date fim = fimdate();
-
-        if (inicio.after(fim)) {
-            return StatusATIVO.ATIVO;
-        } else {
-            return StatusATIVO.CANCELADO;
+        public Long getIdAssinatura() {
+            return idAssinatura;
         }
     }
-}*/
+}

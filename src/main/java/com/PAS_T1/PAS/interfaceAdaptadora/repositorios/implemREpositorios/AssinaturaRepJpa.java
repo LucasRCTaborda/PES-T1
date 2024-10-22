@@ -1,53 +1,31 @@
 package com.PAS_T1.PAS.interfaceAdaptadora.repositorios.implemREpositorios;
 
 
-import com.PAS_T1.PAS.dominio.interRepositorios.IAssinaturaRepository;
-import com.PAS_T1.PAS.dominio.modelos.AplicativoModel;
-import com.PAS_T1.PAS.dominio.modelos.AssinaturaModel;
-import com.PAS_T1.PAS.dominio.modelos.ClienteModel;
+import com.PAS_T1.PAS.interfaceAdaptadora.repositorios.Entity.Aplicativo;
+import com.PAS_T1.PAS.interfaceAdaptadora.repositorios.Entity.Assinatura;
+import com.PAS_T1.PAS.interfaceAdaptadora.repositorios.Entity.Cliente;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+
 @Repository
-public class AssinaturaRepJpa implements IAssinaturaRepository {
-    private List<AssinaturaModel> assinaturas;
+public interface AssinaturaRepJpa extends JpaRepository<Assinatura, Long> {
+    List<Assinatura> findByCliente(Cliente cliente);
+    List<Assinatura> findByAplicativo(Aplicativo aplicativo);
+    List<Assinatura> findByAplicativoId(Long id);
+    List<Assinatura> findByClienteId(long id);
+    Assinatura findById(long id);
 
-    public AssinaturaRepJpa(List<AssinaturaModel> assinaturas) {
-        this.assinaturas = assinaturas;
-    }
+    @Query("SELECT a FROM Assinatura a WHERE a.inicioVigencia < CURRENT_DATE AND a.fimVigencia > CURRENT_DATE")
+    List<Assinatura> findActiveAssinaturas();
 
-    @Override
-    public List<AssinaturaModel> todosAssinatura() {
-        return assinaturas;
-    }
+    @Query("SELECT a FROM Assinatura a WHERE a.inicioVigencia >= CURRENT_DATE OR a.fimVigencia <= CURRENT_DATE")
+    List<Assinatura> findInactiveAssinaturas();
 
-    @Override
-    public List<AplicativoModel> todosAplicativos() {
-        return assinaturas.stream()
-                .map(assinatura -> assinatura.getAplicativos())
-                .distinct()
-                .collect(Collectors.toList());
-    }
+    @Query("SELECT MAX(a.id) FROM Assinatura a")
+    Long findLastAssinaturaId();
 
-    @Override
-    public List<ClienteModel> todosClientes() {
-        return assinaturas.stream()
-                .map(assinatura -> assinatura.getClientes())
-                .distinct()
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public Optional<AssinaturaModel> consultaPorId(Long codigo) {
-        return assinaturas.stream()
-                .filter(assinatura -> assinatura.getCodigo() == codigo)
-                .findFirst();
-    }
-
-    @Override
-    public AssinaturaModel ConsultaporIdAssinatura(long codigo) {
-        return null;
-    }
+    Assinatura save(Assinatura assinatura);
 }

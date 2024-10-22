@@ -4,73 +4,68 @@ package com.PAS_T1.PAS.interfaceAdaptadora.repositorios.Entity;
 import com.PAS_T1.PAS.dominio.modelos.PagamentoModel;
 import jakarta.persistence.*;
 
+import java.util.Date;
+
 @Entity
+@Table(name = "pagamentos")
 public class Pagamento {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long codigo;
-
-    @ManyToOne(cascade = CascadeType.REFRESH)
+    private long id;
+    @ManyToOne
+    @JoinColumn(name = "assinatura_id")
     private Assinatura assinatura;
-
-    private double valorPago;
+    private double valor;
+    private Date dataPagamento;
     private String promocao;
 
-    public Pagamento() {
-    }
+    protected Pagamento() {}
 
-    public Pagamento(long codigo, Assinatura assinatura, double valorPago, String promocao) {
-        this.codigo = codigo;
+    public Pagamento(long id, Assinatura assinatura, double valor, Date dataPagamento, String promocao) {
+        this.id = id;
         this.assinatura = assinatura;
-        this.valorPago = valorPago;
+        this.valor = valor;
+        this.dataPagamento = dataPagamento;
         this.promocao = promocao;
     }
 
-    public long getCodigo() {
-        return codigo;
+    public long getId() {
+        return id;
     }
 
     public Assinatura getAssinatura() {
         return assinatura;
     }
 
-    public void setAssinatura(Assinatura assinatura) {
-        this.assinatura = assinatura;
+    public double getValor() {
+        return valor;
     }
 
-    public double getValorPago() {
-        return valorPago;
-    }
-
-    public void setValorPago(double valorPago) {
-        this.valorPago = valorPago;
+    public Date getDataPagamento() {
+        return dataPagamento;
     }
 
     public String getPromocao() {
         return promocao;
     }
 
-    public void setPromocao(String promocao) {
-        this.promocao = promocao;
-    }
-
-    @Override
-    public String toString() {
-        return "Pagamento{" +
-                "codigo=" + codigo +
-                ", assinatura=" + assinatura +
-                ", valorPago=" + valorPago +
-                ", promocao='" + promocao + '\'' +
-                '}';
-    }
-
-    public static Pagamento fromPagamentoModel(PagamentoModel pModel) {
-        Assinatura assinatura = null;
-        return new Pagamento(pModel.getCodigo(), assinatura, pModel.getValorPago(), pModel.getPromocao());
-    }
-
     public static PagamentoModel toPagamentoModel(Pagamento pagamento) {
-        return new PagamentoModel(pagamento.getCodigo(), pagamento.getAssinatura(), pagamento.getValorPago(), pagamento.getPromocao());
+        return new PagamentoModel(
+                pagamento.getId(),
+                Assinatura.toAssinaturaModel(pagamento.getAssinatura()),
+                pagamento.getValor(),
+                pagamento.getDataPagamento(),
+                pagamento.getPromocao()
+
+        );
+    }
+
+    public static Pagamento fromPagamentomodel(PagamentoModel pagamentoModel) {
+        return new Pagamento(
+                pagamentoModel.getId(),
+                Assinatura.fromAssinaturaModel(pagamentoModel.getAssinatura()),
+                pagamentoModel.getValor(),
+                pagamentoModel.getDataPagamento(),
+                pagamentoModel.getPromocao()
+        );
     }
 }
