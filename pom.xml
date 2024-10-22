@@ -8,15 +8,21 @@
 		<version>3.3.0</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
+
 	<groupId>com.bcopstein</groupId>
 	<artifactId>t1</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>t1</name>
 	<description>t1</description>
+
 	<properties>
-		<java.version>17</java.version>
+		<java.version>23</java.version>
+
 		<spring-cloud.version>2023.0.1</spring-cloud.version>
+		<maven.compiler.source>22</maven.compiler.source>
+		<maven.compiler.target>22</maven.compiler.target>
 	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -49,22 +55,12 @@
 		<dependency>
 			<groupId>org.springframework.amqp</groupId>
 			<artifactId>spring-rabbit-test</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-amqp</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.amqp</groupId>
-			<artifactId>spring-rabbit-test</artifactId>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
 		</dependency>
-
-
 	</dependencies>
 
 	<dependencyManagement>
@@ -72,22 +68,9 @@
 			<dependency>
 				<groupId>org.springframework.cloud</groupId>
 				<artifactId>spring-cloud-dependencies</artifactId>
-				<version>Hoxton.SR12</version> <!-- Atualize para a versão correspondente -->
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-		</dependencies>
-		<dependencies>
-			<dependency>
-				<groupId>org.springframework.cloud</groupId>
-				<artifactId>spring-cloud-dependencies</artifactId>
 				<version>${spring-cloud.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-starter-amqp</artifactId>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
@@ -100,5 +83,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
 </project>
