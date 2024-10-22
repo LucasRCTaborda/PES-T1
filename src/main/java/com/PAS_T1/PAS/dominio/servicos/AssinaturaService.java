@@ -12,6 +12,7 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -88,6 +89,13 @@ public class AssinaturaService {
         AssinaturaDTO assinaturaDto = new AssinaturaDTO(assinatura.getFimVigencia(), assinatura.getId());
         rabbitTemplate.convertAndSend(fanout.getName(),"",assinaturaDto);
         this.assinaturaRepositoryImpl.save(assinatura);
+    }
+
+    public boolean isAssinaturaValid(AssinaturaDTO assinaturaDTO) {
+        if (assinaturaDTO.getFimVigencia() != null && LocalDate.now().isAfter(assinaturaDTO.getFimVigencia())) {
+            return false; 
+        }
+        return true;
     }
 
     public class AssinaturaDTO {
