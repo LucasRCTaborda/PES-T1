@@ -40,7 +40,7 @@ public class AplicativoDTO {
         return custoMensal;
     }
     public static AplicativoDTO fromModel(AplicativoModel aplicativo){
-        return new AplicativoDTO(aplicativo.getCodigo(), aplicativo.getNome(), aplicativo.getCustoMensal());
+        return new AplicativoDTO(aplicativo.getId(), aplicativo.getNome(), aplicativo.getCustoMensal());
     }
 
 }

@@ -1,5 +1,8 @@
 package com.PAS_T1.PAS.dominio.servicos;
 
+import com.PAS_T1.PAS.dominio.modelos.PagamentoModel;
+import com.PAS_T1.PAS.interfaceAdaptadora.repositorios.implemREpositorios.RepoImpl.PagamentoRepositoryImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -83,4 +86,3 @@ public class PagamentoService {
             return null;
         }
     }*/
-}

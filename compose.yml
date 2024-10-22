@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  monolito-service:
+    container_name: monolito
+    ports:
+      - "8081:8081"
+    build:
+      dockerfile: Dockerfile
+      context: Monolito/
+    networks:
+      - projarq-network
+
+networks:
+  projarq-network:

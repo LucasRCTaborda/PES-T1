@@ -1,7 +1,5 @@
 package com.PAS_T1.PAS.dominio.servicos;
 
-import com.PAS_T1.PAS.aplicacao.casosDeUso.CriarAssinatura;
-import com.PAS_T1.PAS.aplicacao.dtos.AssinaturaDTO;
 import com.PAS_T1.PAS.dominio.modelos.AplicativoModel;
 import com.PAS_T1.PAS.dominio.modelos.AssinaturaModel;
 import com.PAS_T1.PAS.dominio.modelos.ClienteModel;
@@ -9,9 +7,13 @@ import com.PAS_T1.PAS.dominio.modelos.StatusATIVO;
 import com.PAS_T1.PAS.interfaceAdaptadora.repositorios.implemREpositorios.RepoImpl.AplicativoRepositoryImpl;
 import com.PAS_T1.PAS.interfaceAdaptadora.repositorios.implemREpositorios.RepoImpl.AssinaturaRepositoryImpl;
 import com.PAS_T1.PAS.interfaceAdaptadora.repositorios.implemREpositorios.RepoImpl.ClienteRepositoryImpl;
+import org.springframework.amqp.core.FanoutExchange;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @Service

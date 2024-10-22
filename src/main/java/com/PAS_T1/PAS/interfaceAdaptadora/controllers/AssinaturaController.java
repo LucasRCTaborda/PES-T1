@@ -1,86 +1,94 @@
 package com.PAS_T1.PAS.interfaceAdaptadora.controllers;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.PAS_T1.PAS.aplicacao.casosDeUso.AssinaturaUseCase;
+import com.PAS_T1.PAS.dominio.modelos.AssinaturaModel;
+import com.PAS_T1.PAS.dominio.modelos.StatusATIVO;
+import com.PAS_T1.PAS.dominio.servicos.AssinaturaService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
+import java.util.List;
+
+@CrossOrigin("*")
 @RestController
-@RequestMapping("/assinaturas")
-public class AssinaturaController {/*
+public class AssinaturaController {
+    private AssinaturaService assinaturaService;
+    private AssinaturaUseCase assinaturaUseCase;
 
-    private final CriarAssinatura assinaturaService;
-    private final AssinaturaJPA_itfRep assinaturaJPAItfRep;
-    private final ClienteJPA_itfRep clienteJPAItfRep; // Repositório de cliente
-    private final AplicativoJPA_itfRep aplicativoJPAItfRep; // Repositório de aplicativo
-
-    public AssinaturaController(
-            CriarAssinatura assinaturaService,
-            AssinaturaJPA_itfRep assinaturaJPAItfRep,
-            ClienteJPA_itfRep clienteJPAItfRep,
-            AplicativoJPA_itfRep aplicativoJPAItfRep) {
+    @Autowired
+    public AssinaturaController(AssinaturaService assinaturaService, AssinaturaUseCase assinaturaUseCase) {
         this.assinaturaService = assinaturaService;
-        this.assinaturaJPAItfRep = assinaturaJPAItfRep;
-        this.clienteJPAItfRep = clienteJPAItfRep;
-        this.aplicativoJPAItfRep = aplicativoJPAItfRep;
+        this.assinaturaUseCase = assinaturaUseCase;
     }
 
-    @PostMapping
-    public ResponseEntity<AssinaturaDTO> criarAssinatura(@RequestBody AssinaturaRequest request) {
-        // Encontrar cliente e aplicativo usando os IDs do request
-        Optional<ClienteModel> optionalCliente = clienteJPAItfRep.findById(request.getClienteId());
-        Optional<AplicativoModel> optionalAplicativo = aplicativoJPAItfRep.findById(request.getAplicativoId());
 
-        if (optionalCliente.isPresent() && optionalAplicativo.isPresent()) {
-            ClienteModel cliente = optionalCliente.get();
-            AplicativoModel aplicativo = optionalAplicativo.get();
+    @PostMapping("/servcad/assinaturas")
+    public AssinaturaModel createNewAssinatura(@RequestBody RequestBodyObject reqBody) {
+        return this.assinaturaService.criaNovaAssinatura(reqBody.getCodCliente(), reqBody.getCodApp());
+    }
 
-            AssinaturaDTO assinaturaDTO = assinaturaService.criarAssinaturaComClienteEAplicativo(cliente, aplicativo);
-            return ResponseEntity.ok(assinaturaDTO);
-        } else {
-            return ResponseEntity.badRequest().body(null); // Retorna 400 se o cliente ou aplicativo não for encontrado
+    @GetMapping("/servcad/assinaturas/{tipo}")
+    public List<AssinaturaModel> getAssinaturas(@PathVariable StatusATIVO tipo) {
+        return this.assinaturaService.getFromType(tipo);
+    }
+
+    @GetMapping("/servcad/asscli/{codcli}")
+    public List<AssinaturaModel> getAssinaturasCli(@PathVariable long codcli) {
+        return this.assinaturaService.getFromClienteId(codcli);
+    }
+
+    @GetMapping("/servcad/assapp/{codapp}")
+    public List<AssinaturaModel> getAssinaturasApp(@PathVariable long codapp) {
+        return this.assinaturaService.getFromAppId(codapp);
+    }
+
+    @GetMapping("/assinvalida/{codass}")
+    public boolean getAssinaturasInvalida(@PathVariable long codass) {
+        return this.assinaturaUseCase.isActive(codass);
+    }
+
+    @GetMapping("/servcad/assinaturas/fromid/{codass}")
+    public AssinaturaDTO getAssinatura(@PathVariable long codass) {
+        AssinaturaModel assinaturaModel = this.assinaturaService.getFromAssinaturaId(codass);
+        return new AssinaturaDTO(assinaturaModel.getFimVigencia(), assinaturaModel.getId());
+    }
+
+
+    public static class RequestBodyObject {
+        private long codCliente;
+        private long codApp;
+
+        RequestBodyObject(long codCliente, long codApp) {
+            this.codCliente = codCliente;
+            this.codApp = codApp;
+        }
+
+        long getCodCliente() {
+            return codCliente;
+        }
+
+        long getCodApp() {
+            return codApp;
         }
     }
 
-    // Adicionando um método para buscar todas as assinaturas
-    @GetMapping
-    public ResponseEntity<List<AssinaturaDTO>> buscarTodasAssinaturas() {
-        List<AssinaturaDTO> assinaturas = assinaturaJPAItfRep.findAll().stream()
-                .map(AssinaturaDTO::fromModel) // Supondo que haja um método `fromModel` na DTO
-                .collect(Collectors.toList());
-        return ResponseEntity.ok(assinaturas);
-    }
 
-    // Adicionando um método para buscar uma assinatura específica por ID
-    @GetMapping("/{id}")
-    public ResponseEntity<AssinaturaDTO> buscarAssinaturaPorId(@PathVariable long id) {
-        Optional<Assinatura> optionalAssinatura = assinaturaJPAItfRep.findById(id);
-        if (optionalAssinatura.isPresent()) {
-            AssinaturaDTO assinaturaDTO = AssinaturaDTO.fromModel(optionalAssinatura.get());
-            return ResponseEntity.ok(assinaturaDTO);
-        } else {
-            return ResponseEntity.notFound().build(); // Retorna 404 se a assinatura não for encontrada
+    public class AssinaturaDTO {
+        private Date expirationDate;
+        private Long idAssinatura;
+
+        AssinaturaDTO(Date expirationDate, Long idAssinatura) {
+            this.expirationDate = expirationDate;
+            this.idAssinatura = idAssinatura;
+        }
+
+        public Date getExpirationDate() {
+            return expirationDate;
+        }
+
+        public Long getIdAssinatura() {
+            return idAssinatura;
         }
     }
-}
-
-// Classe auxiliar para o Request
-class AssinaturaRequest {
-    private long clienteId;
-    private long aplicativoId;
-
-    // Getters e Setters
-    public long getClienteId() {
-        return clienteId;
-    }
-
-    public void setClienteId(long clienteId) {
-        this.clienteId = clienteId;
-    }
-
-    public long getAplicativoId() {
-        return aplicativoId;
-    }
-
-    public void setAplicativoId(long aplicativoId) {
-        this.aplicativoId = aplicativoId;
-    }*/
 }

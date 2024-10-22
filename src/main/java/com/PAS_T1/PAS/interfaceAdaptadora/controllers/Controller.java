@@ -1,6 +1,5 @@
 package com.PAS_T1.PAS.interfaceAdaptadora.controllers;
 
-import com.PAS_T1.PAS.aplicacao.casosDeUso.TodosOsAplicativos;
 import com.PAS_T1.PAS.aplicacao.dtos.AplicativoDTO;
 import com.PAS_T1.PAS.dominio.modelos.*;
 import com.PAS_T1.PAS.interfaceAdaptadora.repositorios.implemREpositorios.*;
@@ -10,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-public class Controller {
+public class Controller {/*
     @Autowired
     private ClienteRepJpa clienteRepJpa;
     @Autowired
@@ -116,7 +115,7 @@ public class Controller {
 
         }
 
-        return um;
+        return um;*/
     }
 
 
@@ -135,7 +134,7 @@ public class Controller {
 
 
 
-
+/*
 
 
 
@@ -156,4 +155,4 @@ public class Controller {
     public String testEndpoint() {
         return "This is a test endpoint!";
     }
-}
+}*/

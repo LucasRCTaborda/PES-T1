@@ -32,7 +32,7 @@ public class Controllerpreset {
         this.pagamentoRepJpa = pagamentoRepJpa;
     }
 
-    // Lista com todos os clientes cadastrados
+    /*// Lista com todos os clientes cadastrados
     @GetMapping("/servcad/clientes")
     public List<ClienteModel> todosClientes() {
         return clienteRepJpa.todos();

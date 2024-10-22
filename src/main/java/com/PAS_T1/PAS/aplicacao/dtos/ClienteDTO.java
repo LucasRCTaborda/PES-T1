@@ -8,8 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import org.springframework.data.annotation.Id;
 
 public class ClienteDTO {
-
-
+    /*
     @Id
     @GeneratedValue
     private long codigo;
@@ -55,5 +54,5 @@ public class ClienteDTO {
     }
     public static ClienteDTO fromModel(ClienteModel cliente){
         return new ClienteDTO(cliente.getCodigo(), cliente.getNome(), cliente.getEmail());
-    }
+    }*/
 }
